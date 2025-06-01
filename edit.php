@@ -1,7 +1,6 @@
 <?php
 require_once '_db.php';
 
-// Перевірка id
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die('Error: Missing or invalid reservation ID');
 }
@@ -98,10 +97,9 @@ $rooms = $db->query("SELECT * FROM rooms");
 
         $(document).ready(function () {
             $("#f").submit(function (event) {
-                event.preventDefault(); // зупиняємо стандартну відправку форми
+                event.preventDefault();
                 var form = $(this);
                 $.post(form.attr("action"), form.serialize(), function (result) {
-                    // Очікуємо JSON з результатом, наприклад: {"result":"OK"}
                     close(result);
                 }, "json").fail(function() {
                     alert("Помилка оновлення бронювання.");
@@ -112,7 +110,6 @@ $rooms = $db->query("SELECT * FROM rooms");
                 close(null);
             });
 
-            // Фокус на перше поле
             $("input[name='name']").focus();
         });
     </script>
