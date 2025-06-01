@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title>Бронювання кімнат в готелі</title>
 
-    <!-- Підключення бібліотек -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/daypilot-all.min.js"></script>
 
@@ -26,7 +25,6 @@
         footer address {
             font-style: normal;
         }
-        /* Стилі для статусів */
         .scheduler_default_rowheader_inner {
             border-right: 1px solid #ccc;
         }
@@ -97,32 +95,29 @@
         }
     };
 
-    // Відкриваємо модальне вікно для створення нового бронювання
     dp.onTimeRangeSelected = function(args) {
         var modal = new DayPilot.Modal({
             onClosed: function(modalArgs) {
                 dp.clearSelection();
                 if (modalArgs.result && modalArgs.result.result === "OK") {
-                    loadEvents();  // оновлюємо події після створення
+                    loadEvents();  
                 }
             }
         });
         modal.showUrl("new.php?start=" + args.start.toString() + "&end=" + args.end.toString() + "&resource=" + args.resource);
     };
 
-    // Відкриваємо модальне вікно редагування бронювання по кліку на подію
     dp.onEventClick = function(args) {
         var modal = new DayPilot.Modal({
             onClosed: function(modalArgs) {
                 if (modalArgs.result && modalArgs.result.result === "OK") {
-                    loadEvents();  // оновлюємо події після редагування
+                    loadEvents();  
                 }
             }
         });
         modal.showUrl("edit.php?id=" + args.e.id());
     };
 
-    // Завантаження кімнат
     function loadResources() {
         $.post("backend_rooms.php", function(data) {
             dp.resources = data;
@@ -131,7 +126,6 @@
         });
     }
 
-    // Завантаження бронювань
     function loadEvents() {
         var start = dp.visibleStart().toString();
         var end = dp.visibleEnd().toString();
