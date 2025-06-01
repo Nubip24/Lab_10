@@ -1,7 +1,6 @@
 <?php
 require_once '_db.php';
 
-// Перевірка обов’язкових параметрів
 if (
     !isset($_POST['id']) || !isset($_POST['name']) || !isset($_POST['start']) ||
     !isset($_POST['end']) || !isset($_POST['room']) || !isset($_POST['status']) || !isset($_POST['paid'])
@@ -15,7 +14,6 @@ if (
     exit;
 }
 
-// Підготовка SQL-запиту
 $stmt = $db->prepare("
     UPDATE reservations 
     SET NAME = :name, START = :start, END = :end, room_id = :room, STATUS = :status, paid = :paid 
@@ -31,7 +29,6 @@ $stmt->bindParam(':status', $_POST['status']);
 $stmt->bindParam(':paid', $_POST['paid']);
 $stmt->execute();
 
-// Відповідь у форматі JSON
 $response = [
     'result' => 'OK',
     'message' => 'Update successful'
